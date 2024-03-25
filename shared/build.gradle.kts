@@ -1,6 +1,10 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinParcelize)
+    alias(libs.plugins.jetbrainsCompose)
 }
 
 kotlin {
@@ -25,7 +29,17 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
+            // Compose
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            @OptIn(ExperimentalComposeLibrary::class)
+            implementation(compose.components.resources)
+
+            // Appyx
+            api(libs.appyx.backstack.common)
+            implementation(libs.appyx.navigation.common)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

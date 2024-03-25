@@ -1,40 +1,27 @@
 package com.example.movie.android
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.movie.Greeting
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import com.bumble.appyx.navigation.integration.NodeActivity
+import com.bumble.appyx.navigation.integration.NodeHost
+import com.bumble.appyx.navigation.platform.AndroidLifecycle
+import com.example.movie.ui.App
+import com.example.movie.ui.navigation.RootNode
 
-class MainActivity : ComponentActivity() {
+class MainActivity : NodeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApplicationTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+            App().Content(darkTheme = isSystemInDarkTheme()) {
+                NodeHost(
+                    lifecycle = AndroidLifecycle(LocalLifecycleOwner.current.lifecycle),
+                    integrationPoint = appyxV2IntegrationPoint
                 ) {
-                    GreetingView(Greeting().greet())
+                    RootNode(nodeContext = it)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun GreetingView(text: String) {
-    Text(text = text)
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        GreetingView("Hello, Android!")
     }
 }
