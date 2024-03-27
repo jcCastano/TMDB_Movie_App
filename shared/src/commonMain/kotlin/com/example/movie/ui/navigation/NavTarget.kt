@@ -2,11 +2,12 @@ package com.example.movie.ui.navigation
 
 import com.bumble.appyx.utils.multiplatform.Parcelable
 import com.bumble.appyx.utils.multiplatform.Parcelize
+import com.example.movie.domain.model.Movie
 
 sealed class NavTarget: Parcelable {
     @Parcelize
-    object Movie: NavTarget()
+    object Home: NavTarget()
 
     @Parcelize
-    object Detail: NavTarget()
+    data class Detail(val movie: Movie) : NavTarget()
 }
