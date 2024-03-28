@@ -16,6 +16,12 @@ kotlin {
             }
         }
     }
+
+    targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java).all {
+        binaries.withType(org.jetbrains.kotlin.gradle.plugin.mpp.Framework::class.java).all {
+            export(libs.moko.mvvm.core)
+        }
+    }
     
     listOf(
         iosX64(),
@@ -60,7 +66,6 @@ kotlin {
 
             // Moko
             api(libs.moko.mvvm.core)
-            api(libs.moko.mvvm.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
